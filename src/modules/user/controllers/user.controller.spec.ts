@@ -60,6 +60,21 @@ describe('UserController (e2e)', () => {
     });
   });
 
+  describe('GET /users?email=<value>', () => {
+    it('should return specific user by email', async () => {
+      const fakeUsers = [generateFakeUser(), generateFakeUser()];
+      const firstFakeUser = fakeUsers[0];
+      await repository.save(fakeUsers);
+      const { body: user } = await agent(app.getHttpServer())
+        .get(`/users?email=${firstFakeUser.email}`)
+        .set('Accept', 'application/json')
+        .expect(200);
+      expect(user).toBeTruthy();
+      expect(user).toMatchObject(firstFakeUser);
+      userAttributes.forEach((key) => expect(user).toHaveProperty(key));
+    });
+  });
+
   describe('POST /users', () => {
     it('should add a new user', async () => {
       const newFakeUser = generateFakeUser();

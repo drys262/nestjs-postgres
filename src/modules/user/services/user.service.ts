@@ -17,6 +17,10 @@ export class UserService {
     return this.userRepository.find({});
   }
 
+  getUserByEmail(email: string): Promise<User> {
+    return this.userRepository.findOne({ email });
+  }
+
   addUser(createUserDto: CreateUserDto): Promise<User> {
     return this.userRepository.save({
       id: createUserDto.id ? createUserDto.id : nanoid(),

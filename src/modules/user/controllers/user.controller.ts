@@ -7,6 +7,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { CreateUserDto } from '../dtos/create-user.dto';
 import { UpdateUserDto } from '../dtos/update-user.dto';
@@ -17,8 +18,12 @@ export class UserController {
   constructor(private userService: UserService) {}
 
   @Get()
-  async getUsers() {
-    return this.userService.getUsers();
+  async getUsers(@Query('email') email: string) {
+    if (!email) {
+      return this.userService.getUsers();
+    }
+
+    return this.userService.getUserByEmail(email);
   }
 
   @Post()
