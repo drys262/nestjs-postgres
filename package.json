@@ -97,7 +97,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "npm run graphql:schema && npm run graphql:typings && git add schema.gql src/graphql.ts && lint-staged && npm run typecheck"
+      "pre-commit": "lint-staged && npm run typecheck"
     }
   }
 }
